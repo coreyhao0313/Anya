@@ -107,8 +107,8 @@ const Home = () => {
             scale: 1,
         }).then((canvas) => {
             const $aLink = document.createElement("a");
-            $aLink.setAttribute("href", canvas.toDataURL("image/gif"));
-            $aLink.setAttribute("download", "anya_like_it.gif");
+            $aLink.setAttribute("href", canvas.toDataURL("image/jpeg"));
+            $aLink.setAttribute("download", "anya_like_it.jpeg");
             $aLink.click();
         });
     }, [image]);

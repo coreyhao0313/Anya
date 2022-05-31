@@ -1,0 +1,159 @@
+$background_color: #eeeeee;
+
+@mixin verticalAlign($position, $height: 100%) {
+    &::after,
+    > span {
+        content: " ";
+        display: inline-block;
+        vertical-align: $position;
+    }
+    &::after {
+        height: $height;
+    }
+}
+
+@mixin muiCustomInput() {
+    width: inherit;
+    background-color: $background_color;
+    color: #555 !important;
+
+    font-size: 18px !important;
+    line-height: 1.4 !important;
+    border-radius: 8px;
+
+    &::before,
+    &::after {
+        border: none !important;
+    }
+}
+
+.root {
+    &__field {
+        line-height: 100%;
+
+        &__label {
+            font-size: 18px;
+            font-weight: 700;
+            color: #FFFFFF;
+        }
+        &__helper {
+            font-size: 14px;
+            font-weight: 400;
+            color: rgba(#FFFFFF, 0.3);
+            @include verticalAlign(bottom);
+
+            &--error {
+                font-weight: 700;
+                color: #FF0000;
+            }
+        }
+
+        &__input {
+            font-family: inherit;
+            font-size: 18px;
+            font-weight: 500;
+            color: #f58f29;
+            padding: 11px 12px;
+            width: 100%;
+            border: none;
+            border-radius: 8px;
+            background-color: $background_color;
+            background-image: none;
+            outline: none;
+            line-height: 1.44;
+
+            -webkit-appearance: none;
+
+            &::placeholder {
+                line-height: inherit;
+                height: 100%;
+            }
+
+            &[type="password"] {
+                font-family: initial;
+            }
+
+            &:-webkit-autofill {
+                -webkit-text-fill-color: #CCC;
+                // -webkit-box-shadow: 0 0 0 1000px rgba($color_sea_green, 0.1) inset;
+                transition: background-color 1000s ease-in-out 1s;
+            }
+
+            &::placeholder,
+            &:disabled {
+                color: rgba(#777, 0.3);
+            }
+
+            &:focus {
+                // box-shadow: 0 0 0 2px inset $color_sea_green;
+            }
+
+            &--empty,
+            &--error {
+                box-shadow: 0 0 0 2px inset #FF0000 !important;
+            }
+        }
+
+        &__controllabel {
+            margin-right: 0 !important;
+
+            :global {
+                .MuiFormControlLabel-label {
+                    font-family: inherit;
+                    font-size: 18px;
+                    font-weight: 700;
+                    color: #FFFFFF;
+                    margin-right: 0;
+                }
+                .MuiSvgIcon-root {
+                    fill: #f58f29;
+                }
+            }
+        }
+
+        &__select {
+            @include muiCustomInput;
+
+            :global {
+                .MuiSelect-select {
+                    background: none !important;
+                    padding: 11px 12px !important;
+                }
+            }
+        }
+
+        &__datepicker {
+            width: 100%;
+
+            > div {
+                @include muiCustomInput;
+                padding: 11px 12px !important;
+            }
+
+            > div[class*="Mui-focused"] {
+                // box-shadow: 0 0 0 2px inset $color_sea_green;
+            }
+
+            &--error > div {
+                box-shadow: 0 0 0 2px inset #FF0000 !important;
+            }
+        }
+
+        &__textarea {
+            border-radius: 8px;
+            font-family: inherit !important;
+            line-height: 1.44;
+            resize: none;
+            outline: none;
+            box-sizing: border-box;
+            width: 100%;
+
+            color: #f58f29;
+
+            &::placeholder,
+            &:disabled {
+                color: rgba(#777, 0.3);
+            }
+        }
+    }
+}

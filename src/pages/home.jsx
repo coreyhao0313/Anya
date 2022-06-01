@@ -71,7 +71,7 @@ const Home = () => {
                     </Block>
                 </StyledGridItem>
                 <StyledGridItem item xs={12}>
-                    <SubHw>安妮亞喜歡這個</SubHw>
+                    <SubHw>安妮亞想換場景</SubHw>
                 </StyledGridItem>
             </StyledGridBg>
         </Container>

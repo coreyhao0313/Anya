@@ -68,7 +68,7 @@ const SubHw = styled.div`
     text-shadow: 0.04em 0.04em 0.04em rgba(0, 0, 0, 0.4);
 `;
 
-const LikeIt = () => {
+const Naked = () => {
     const $stage = useRef();
 
     const [image, setImage] = useState({
@@ -202,4 +202,4 @@ const LikeIt = () => {
     );
 };
 
-export default LikeIt;
+export default Naked;

@@ -9,7 +9,7 @@ const Title = styled.h1`
 const Home = () => {
     return (
         <>
-            <Title>Hello</Title>
+            <Title>...</Title>
         </>
     );
 };

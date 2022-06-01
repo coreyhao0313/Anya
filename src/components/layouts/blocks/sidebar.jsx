@@ -1,6 +1,4 @@
-import { useCallback } from "react";
-import { useState } from "react";
-import { useMemo } from "react";
+import { useCallback, useState } from "react";
 import { NavLink, useLocation } from "react-router-dom";
 import styled from "styled-components";
 
@@ -8,7 +6,12 @@ const LINK_FONT_SIZE = 1.3;
 const StyledNavLink = styled(NavLink)`
     text-decoration: none;
     font-size: ${LINK_FONT_SIZE}em;
-    color: #${(props) => (props.active ? "C2A899" : "a08677")};
+
+    color: #a08677;
+
+    &.active {
+        color: #c2a899;
+    }
 `;
 const Nav = styled.div`
     margin-top: 50px;
@@ -104,7 +107,7 @@ export const LinkListWithRouter = () => {
                                     targetIndex: index,
                                 })
                             }
-                            active={locationIndex === index}
+                            className={(isActive) => (isActive ? "active" : "")}
                             to={link.to}
                         >
                             {link.label}

@@ -271,7 +271,7 @@ const AnyaCustom = () => {
                             mirror={image.mirrorStuff}
                         />
                         <AnyaRecent
-                            src={`/anya_${image.typeAnya}.png`}
+                            src={`${process.env.REACT_APP_ROUTER_BASENAME}/anya_${image.typeAnya}.png`}
                             mirror={image.mirrorAnya}
                             imgHeight={image.height}
                             imgScale={image.scaleAnya}

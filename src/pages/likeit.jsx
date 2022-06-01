@@ -213,14 +213,14 @@ const LikeIt = () => {
                         <Bg
                             width={image.width}
                             height={image.height}
-                            src="/spot1_bg.png"
+                            src={`${process.env.REACT_APP_ROUTER_BASENAME}/spot1_bg.png`}
                             mirror={image.mirrorBg}
                             invisible={image.invisibleBg}
                         />
                         <Anya
                             width={image.width}
                             height={image.height}
-                            src="/anya_1.png"
+                            src={`${process.env.REACT_APP_ROUTER_BASENAME}/anya_1.png`}
                             mirror={image.mirrorAnya}
                             invisible={image.invisibleAnya}
                         />

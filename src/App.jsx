@@ -12,7 +12,7 @@ import "./reset.css";
 
 function App() {
     return (
-        <Router>
+        <Router basename={process.env.REACT_APP_ROUTER_BASENAME}>
             <Layout.Default sidebar={<LinkListWithRouter />}>
                 <Routes>
                     <Route path="/" element={<Home />}></Route>

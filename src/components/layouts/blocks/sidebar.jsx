@@ -27,7 +27,7 @@ const Nav = styled.div`
     &::before {
         content: " ";
         display: block;
-        background-image: url(/anya_2.png);
+        background-image: url(${process.env.REACT_APP_ROUTER_BASENAME}/anya_2.png);
         width: 3.125em;
         height: 3.125em;
         background-position: right;
@@ -63,21 +63,8 @@ const NavItem = styled.div`
 
 const OFFSET_TOP = LINK_FONT_SIZE + PADDING_TOP + PADDING_BOTTOM;
 
-const LINKPATHS = ["/anya_like_it", "/anya_found_it_out", "/anya_custom"];
-const LINKS = [
-    {
-        to: LINKPATHS[0],
-        label: "場景 1",
-    },
-    {
-        to: LINKPATHS[1],
-        label: "場景 2",
-    },
-    {
-        to: LINKPATHS[2],
-        label: "自訂景",
-    },
-];
+const LINKPATHS = ["/", "/anya_like_it", "/anya_found_it_out", "/anya_custom"];
+const LINKLABELS = ["關於", "場景 1", "場景 2", "自訂景"];
 
 export const LinkListWithRouter = () => {
     let location = useLocation();
@@ -98,7 +85,7 @@ export const LinkListWithRouter = () => {
     return (
         <>
             <Nav topEm={linkMarkPosTop} anyaSneaky={link.type === "hover"} onMouseLeave={onMouseLeave}>
-                {LINKS.map((link, index) => (
+                {LINKLABELS.map((label, index) => (
                     <NavItem key={`link-${index}`}>
                         <StyledNavLink
                             onMouseEnter={() =>
@@ -108,9 +95,9 @@ export const LinkListWithRouter = () => {
                                 })
                             }
                             className={(isActive) => (isActive ? "active" : "")}
-                            to={link.to}
+                            to={LINKPATHS[index]}
                         >
-                            {link.label}
+                            {label}
                         </StyledNavLink>
                     </NavItem>
                 ))}

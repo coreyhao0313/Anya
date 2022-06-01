@@ -189,7 +189,7 @@ const FoundItOut = () => {
                         <Bg
                             width={image.width}
                             height={image.height}
-                            src={`/spot2_bg${image.mouthClosedAnya ? 2 : 1}.jpg`}
+                            src={`${process.env.REACT_APP_ROUTER_BASENAME}/spot2_bg${image.mouthClosedAnya ? 2 : 1}.jpg`}
                             mirror={image.mirrorBg}
                         />
                         <SubHw bottom={image.height * 0.09183} imgFontSize={image.width * 0.03428}>

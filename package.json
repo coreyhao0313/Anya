@@ -2,7 +2,7 @@
   "name": "anya",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://coreyhao0313.github.io/anya",
+  "homepage": "https://coreyhao0313.github.io/Anya",
   "dependencies": {
     "@material-ui/core": "4.11.2",
     "@testing-library/jest-dom": "^5.16.4",
@@ -20,8 +20,8 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
+    "start": "REACT_APP_ROUTER_BASENAME=/Anya react-scripts start",
+    "build": "REACT_APP_ROUTER_BASENAME=/Anya react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "predeploy": "npm run build",

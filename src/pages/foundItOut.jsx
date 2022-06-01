@@ -77,7 +77,7 @@ const FoundItOut = () => {
         src: "",
         imageFilledWay: "width",
         sub: "光溜溜, 光溜溜",
-        mirrorCustom: false,
+        mirrorStuff: false,
         mirrorBg: false,
         oliPaint: true,
         srcOliPaint: "",
@@ -88,7 +88,7 @@ const FoundItOut = () => {
         setForm: setImage,
     });
     const inputProps = {
-        mirrorCustom: useMemo(() => ({ checked: image.mirrorCustom, onChange: onCheck }), [image.mirrorCustom]),
+        mirrorStuff: useMemo(() => ({ checked: image.mirrorStuff, onChange: onCheck }), [image.mirrorStuff]),
         mirrorBg: useMemo(() => ({ checked: image.mirrorBg, onChange: onCheck }), [image.mirrorBg]),
         oliPaint: useMemo(() => ({ checked: image.oliPaint, onChange: onCheck }), [image.oliPaint]),
         mouthClosedAnya: useMemo(
@@ -141,8 +141,8 @@ const FoundItOut = () => {
                                 <Grid item style={{ paddingTop: 60, paddingBottom: 16 }}>
                                     <CheckboxField
                                         label="圖鏡像"
-                                        fieldKey="mirrorCustom"
-                                        inputProps={inputProps.mirrorCustom}
+                                        fieldKey="mirrorStuff"
+                                        inputProps={inputProps.mirrorStuff}
                                     />
                                 </Grid>
                                 <Grid item>
@@ -184,12 +184,12 @@ const FoundItOut = () => {
                             top={image.height * 0.0652}
                             url={image.oliPaint ? image.srcOliPaint : image.src}
                             imageFilledWay={image.imageFilledWay}
-                            mirror={image.mirrorCustom}
+                            mirror={image.mirrorStuff}
                         />
                         <Bg
                             width={image.width}
                             height={image.height}
-                            src={`/material_2/bg${image.mouthClosedAnya ? 2 : 1}.jpg`}
+                            src={`/spot2_bg${image.mouthClosedAnya ? 2 : 1}.jpg`}
                             mirror={image.mirrorBg}
                         />
                         <SubHw bottom={image.height * 0.09183} imgFontSize={image.width * 0.03428}>

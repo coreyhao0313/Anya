@@ -4,12 +4,13 @@ import { Container, Grid } from "@material-ui/core";
 import html2canvas from "html2canvas";
 
 import { ImageControlorForm } from "../components/controlor/image.jsx";
-import { CheckboxField, useFormBase } from "../components/controlor/form.jsx";
+import { CheckboxField, useFormBase, SelectField, InputField } from "../components/controlor/form.jsx";
+import { image2oliPaint } from "../lib/oldPainting.js";
 
 const CSS = {
     COMMON: `
         position: absolute;
-    `,
+    `
 };
 
 const Stage = styled.div`
@@ -21,43 +22,72 @@ const Stage = styled.div`
     overflow: hidden;
     background-color: #000;
 `;
-const Stuff = styled.div`
+
+const Bg = styled.img`
     ${CSS.COMMON}
     z-index: 1;
-    ${(props) => (!props.url ? "display: none" : "")};
 
-    left: ${(props) => props.left + "px"};
-    top: ${(props) => props.top + "px"};
+    ${(props) => (props.mirror ? "transform: rotateY(180deg)" : "")};
+    ${(props) => (props.invisible ? "visibility: hidden" : "")};
+`;
+const Stuff = styled.div`
+    ${CSS.COMMON}
+    ${(props) => (!props.url ? "background-color: #FFF;" : "")};
 
-    width: ${(props) => props.imgWidth + "px"};
-    height: ${(props) => props.imgHeight + "px" || "auto"};
+    z-index: 2;
+
+    left: 0;
+    top: 0;
+
+    width: 100%;
+    height: 100%;
 
     background-image: url(${(props) => props.url});
     background-size: ${(props) => (props.imageFilledWay === "width" ? "100% auto" : "auto 100%")};
     background-position: center;
     background-repeat: no-repeat;
 
+    border-radius: 2px;
+
     ${(props) => (props.mirror ? "transform: rotateY(180deg)" : "")};
 `;
-
-const Bg = styled.img`
-    ${CSS.COMMON}
+const AnyaBase = styled.img`
     z-index: 2;
 
-    ${(props) => (props.mirror ? "transform: rotateY(180deg)" : "")};
-    ${(props) => (props.invisible ? "visibility: hidden" : "")};
-`;
-const Anya = styled.img`
-    ${CSS.COMMON}
-    left: 0;
-    z-index: 3;
+    width: 100%;
+    height: 100%;
 
-    ${(props) => (props.mirror ? "transform: rotateY(180deg)" : "")};
-    ${(props) => (props.invisible ? "visibility: hidden" : "")};
+    top: ${(props) => {
+            const imgScale = props.imgScale / 100 || 1;
+            const scaleTop = props.imgHeight * imgScale;
+            console.log(imgScale, scaleTop, props.imgHeight);
+            return (props.imgHeight - scaleTop+4) / 2;
+        }}px;
+    transform: scale(${(props) => props.imgScale / 100 || 1}) ${(props) => (props.mirror ? "rotateY(180deg)" : "")};
 `;
+const Anya = {
+    Type1: styled(AnyaBase)`
+        ${CSS.COMMON}
+        left: 0;
+        width: 100%;
+    `,
+    Type2: styled(AnyaBase)`
+        ${CSS.COMMON}
+        top: 23.5%;
+        left: 0;
+    `,
+    Type3: styled(AnyaBase)`
+        ${CSS.COMMON}
+        z-index: 2;
+
+        width: auto;
+
+        ${(props) => (props.mirror ? "left" : "right")}: 0;
+    `,
+};
 const SubHw = styled.div`
     ${CSS.COMMON}
-    z-index: 4;
+    z-index: 2;
 
     left: 50%;
     transform: translateX(-50%);
@@ -71,7 +101,7 @@ const SubHw = styled.div`
     text-shadow: 0.04em 0.04em 0.04em rgba(0, 0, 0, 0.4);
 `;
 
-const LikeIt = () => {
+const AnyaCustom = () => {
     const $stage = useRef();
 
     const [image, setImage] = useState({
@@ -79,25 +109,56 @@ const LikeIt = () => {
         height: 392,
         src: "",
         imageFilledWay: "width",
-        sub: "安妮亞喜歡這個",
+        sub: "那個",
         mirrorStuff: false,
         mirrorAnya: false,
-        mirrorBg: false,
-        invisibleAnya: false,
-        invisibleBg: false,
-        fullStuff: false,
+        oliPaint: false,
+        srcOliPaint: "",
+        typeAnya: "1",
+        scaleAnya: "100",
     });
 
-    const { onCheck } = useFormBase({
+    const { onCheck, onChange, onRegex } = useFormBase({
         setForm: setImage,
+        setFormStatus: () => {},
     });
     const inputProps = {
         mirrorStuff: useMemo(() => ({ checked: image.mirrorStuff, onChange: onCheck }), [image.mirrorStuff]),
         mirrorAnya: useMemo(() => ({ checked: image.mirrorAnya, onChange: onCheck }), [image.mirrorAnya]),
-        mirrorBg: useMemo(() => ({ checked: image.mirrorBg, onChange: onCheck }), [image.mirrorBg]),
-        invisibleAnya: useMemo(() => ({ checked: image.invisibleAnya, onChange: onCheck }), [image.invisibleAnya]),
-        invisibleBg: useMemo(() => ({ checked: image.invisibleBg, onChange: onCheck }), [image.invisibleBg]),
-        fullStuff: useMemo(() => ({ checked: image.fullStuff, onChange: onCheck }), [image.fullStuff]),
+        oliPaint: useMemo(() => ({ checked: image.oliPaint, onChange: onCheck }), [image.oliPaint]),
+        typeAnya: useMemo(
+            () => ({
+                value: image.typeAnya,
+                defaultValue: "1",
+                onChange,
+            }),
+            [image.typeAnya]
+        ),
+        typeAnyaItems: useMemo(
+            () => [
+                {
+                    value: "1",
+                    label: "1",
+                },
+                {
+                    value: "2",
+                    label: "2",
+                },
+                {
+                    value: "3",
+                    label: "3",
+                },
+            ],
+            []
+        ),
+        scaleAnya: useMemo(
+            () => ({
+                value: image.scaleAnya.toString(),
+                placeholder: "基準 100",
+                onChange,
+            }),
+            [image.scaleAnya]
+        ),
     };
 
     const onFormChange = useCallback(({ form }) => {
@@ -105,6 +166,9 @@ const LikeIt = () => {
     }, []);
     const onUploaded = useCallback((base64) => {
         setImage((imageState) => ({ ...imageState, src: base64 }));
+        image2oliPaint(base64).then((canvas) => {
+            setImage((imageState) => ({ ...imageState, srcOliPaint: canvas.toDataURL("image/jpeg") }));
+        });
     }, []);
 
     const onSave = useCallback(() => {
@@ -115,20 +179,21 @@ const LikeIt = () => {
         }).then((canvas) => {
             const $aLink = document.createElement("a");
             $aLink.setAttribute("href", canvas.toDataURL("image/jpeg"));
-            $aLink.setAttribute("download", "anya_like_it.jpeg");
+            $aLink.setAttribute("download", "anya_found_it_out.jpeg");
             $aLink.click();
         });
     }, [image]);
 
+    const AnyaRecent = Anya[`Type${image.typeAnya}`];
     return (
         <Container component="main">
             <Grid container direction="row" spacing={2}>
                 <Grid item xs={12}>
                     <ImageControlorForm
                         maxWidth={1000}
-                        maxHeight={560}
+                        maxHeight={562}
                         defaultWidth={700}
-                        defaultHeight={392}
+                        defaultHeight={393}
                         onFormChange={onFormChange}
                         onSave={onSave}
                         onUploaded={onUploaded}
@@ -138,18 +203,45 @@ const LikeIt = () => {
 
                         <Grid item xs={12} md="auto">
                             <Grid container direction="column">
+                                <Grid item style={{ paddingTop: 0, paddingBottom: 16 }}>
+                                    <SelectField
+                                        label="安妮亞類型"
+                                        fieldKey="typeAnya"
+                                        inputProps={inputProps.typeAnya}
+                                        items={inputProps.typeAnyaItems}
+                                    />
+                                </Grid>
+                                <Grid item>
+                                    <InputField
+                                        showBlock
+                                        fixedBottomText
+                                        label="安妮亞縮放"
+                                        pattern={/^\d+(\.\d{1,})?$/}
+                                        errRegexText="只能是數字或小數"
+                                        onRegex={onRegex}
+                                        inputProps={inputProps.scaleAnya}
+                                        fieldKey="scaleAnya"
+                                        emptyText={`＊正常比例為 1 倍 = 100`}
+                                        required
+                                    />
+                                </Grid>
+                            </Grid>
+                        </Grid>
+
+                        <Grid item xs={12} md="auto">
+                            <Grid container direction="column">
                                 <Grid item style={{ paddingTop: 60, paddingBottom: 16 }}>
                                     <CheckboxField
-                                        label="自訂圖鏡像"
+                                        label="圖鏡像"
                                         fieldKey="mirrorStuff"
                                         inputProps={inputProps.mirrorStuff}
                                     />
                                 </Grid>
                                 <Grid item>
                                     <CheckboxField
-                                        label="自訂圖填滿"
-                                        fieldKey="fullStuff"
-                                        inputProps={inputProps.fullStuff}
+                                        label="圖油畫感"
+                                        fieldKey="oliPaint"
+                                        inputProps={inputProps.oliPaint}
                                     />
                                 </Grid>
                             </Grid>
@@ -157,37 +249,14 @@ const LikeIt = () => {
 
                         <Grid item xs={12} md="auto">
                             <Grid container direction="column">
-                                <Grid item style={{ paddingTop: 60, paddingBottom: 16 }}>
+                                <Grid item style={{ paddingTop: 0, paddingBottom: 16 }}>
+                                    ...
+                                </Grid>
+                                <Grid item>
                                     <CheckboxField
                                         label="安妮亞鏡像"
                                         fieldKey="mirrorAnya"
                                         inputProps={inputProps.mirrorAnya}
-                                    />
-                                </Grid>
-                                <Grid item>
-                                    <CheckboxField
-                                        label="安妮亞消失"
-                                        fieldKey="invisibleAnya"
-                                        inputProps={inputProps.invisibleAnya}
-                                    />
-                                </Grid>
-                            </Grid>
-                        </Grid>
-
-                        <Grid item xs={12} md="auto">
-                            <Grid container direction="column">
-                                <Grid item style={{ paddingTop: 60, paddingBottom: 16 }}>
-                                    <CheckboxField
-                                        label="背景鏡像"
-                                        fieldKey="mirrorBg"
-                                        inputProps={inputProps.mirrorBg}
-                                    />
-                                </Grid>
-                                <Grid item>
-                                    <CheckboxField
-                                        label="背景消失"
-                                        fieldKey="invisibleBg"
-                                        inputProps={inputProps.invisibleBg}
                                     />
                                 </Grid>
                             </Grid>
@@ -197,32 +266,15 @@ const LikeIt = () => {
                 <Grid item xs={12}>
                     <Stage ref={$stage} imgWidth={image.width} imgHeight={image.height}>
                         <Stuff
-                            {...(image.fullStuff
-                                ? { imgWidth: image.width, imgHeight: image.height, left: 0, top: 0 }
-                                : {
-                                      imgWidth: image.width * 0.345,
-                                      imgHeight: image.height * 0.473,
-                                      left:
-                                          image.width * (0.308 + (image.mirrorBg && !image.invisibleBg ? 0.041428 : 0)),
-                                      top: image.height * 0.141,
-                                  })}
-                            url={image.src}
+                            url={image.oliPaint ? image.srcOliPaint : image.src}
                             imageFilledWay={image.imageFilledWay}
                             mirror={image.mirrorStuff}
                         />
-                        <Bg
-                            width={image.width}
-                            height={image.height}
-                            src="/spot1_bg.png"
-                            mirror={image.mirrorBg}
-                            invisible={image.invisibleBg}
-                        />
-                        <Anya
-                            width={image.width}
-                            height={image.height}
-                            src="/anya_1.png"
+                        <AnyaRecent
+                            src={`/anya_${image.typeAnya}.png`}
                             mirror={image.mirrorAnya}
-                            invisible={image.invisibleAnya}
+                            imgHeight={image.height}
+                            imgScale={image.scaleAnya}
                         />
                         <SubHw bottom={image.height * 0.09183} imgFontSize={image.width * 0.03428}>
                             {image.sub}
@@ -234,4 +286,4 @@ const LikeIt = () => {
     );
 };
 
-export default LikeIt;
+export default AnyaCustom;

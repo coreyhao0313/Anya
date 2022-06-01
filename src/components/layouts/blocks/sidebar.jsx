@@ -27,7 +27,7 @@ const Nav = styled.div`
     &::before {
         content: " ";
         display: block;
-        background-image: url(/anya_1.png);
+        background-image: url(/anya_2.png);
         width: 3.125em;
         height: 3.125em;
         background-position: right;
@@ -35,8 +35,8 @@ const Nav = styled.div`
         background-repeat: no-repeat;
         transform: ${(props) =>
             props.anyaSneaky
-                ? "scale(2) rotateY(0deg) rotate(36deg) translateX(-12px)"
-                : "scale(2.5) rotateY(180deg) rotate(-31deg) translateX(12px)"};
+                ? "scale(2.5) rotateY(180deg) rotate(-38deg) translateX(12px)"
+                : "scale(2) rotateY(0deg) rotate(46deg) translateX(-13px)"};
 
         position: absolute;
         top: ${(props) => props.topEm - 1.09}em;
@@ -55,7 +55,7 @@ const PADDING_BOTTOM = 1.5;
 const NavItem = styled.div`
     padding-top: ${PADDING_TOP}em;
     padding-bottom: ${PADDING_BOTTOM}em;
-    padding-left: 2em;
+    padding-left: 2.3em;
 
     position: relative;
     z-index: 3;
@@ -63,19 +63,19 @@ const NavItem = styled.div`
 
 const OFFSET_TOP = LINK_FONT_SIZE + PADDING_TOP + PADDING_BOTTOM;
 
-const LINKPATHS = ["/", "/anya_like_it", "/anya_found_it_out"];
+const LINKPATHS = ["/anya_like_it", "/anya_found_it_out", "/anya_custom"];
 const LINKS = [
     {
         to: LINKPATHS[0],
-        label: "介紹",
+        label: "場景 1",
     },
     {
         to: LINKPATHS[1],
-        label: "喜歡這個",
+        label: "場景 2",
     },
     {
         to: LINKPATHS[2],
-        label: "光溜溜",
+        label: "自訂景",
     },
 ];
 

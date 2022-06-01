@@ -24,6 +24,7 @@ const Stage = styled.div`
 const Stuff = styled.div`
     ${CSS.COMMON}
     z-index: 1;
+    ${(props) => (!props.url ? "display: none" : "")};
 
     left: ${(props) => props.left + "px"};
     top: ${(props) => props.top + "px"};
@@ -35,6 +36,8 @@ const Stuff = styled.div`
     background-size: ${(props) => (props.imageFilledWay === "width" ? "100% auto" : "auto 100%")};
     background-position: center;
     background-repeat: no-repeat;
+
+    ${(props) => (props.mirror ? "transform: rotateY(180deg)" : "")};
 `;
 
 const Bg = styled.img`
@@ -64,7 +67,7 @@ const SubHw = styled.div`
     font-family: sans-serif;
     font-weight: bold;
     color: white;
-    -webkit-text-stroke: 0.02em black;
+    -webkit-text-stroke: 0.03em black;
     text-shadow: 0.04em 0.04em 0.04em rgba(0, 0, 0, 0.4);
 `;
 
@@ -77,20 +80,22 @@ const LikeIt = () => {
         src: "",
         imageFilledWay: "width",
         sub: "安妮亞喜歡這個",
-        mirror_anya: false,
-        mirror_bg: false,
-        invisible_anya: false,
-        invisible_bg: false,
+        mirrorCustom: false,
+        mirrorAnya: false,
+        mirrorBg: false,
+        invisibleAnya: false,
+        invisibleBg: false,
     });
 
     const { onCheck } = useFormBase({
         setForm: setImage,
     });
     const inputProps = {
-        mirror_anya: useMemo(() => ({ checked: image.mirror_anya, onChange: onCheck }), [image.mirror_anya]),
-        mirror_bg: useMemo(() => ({ checked: image.mirror_bg, onChange: onCheck }), [image.mirror_bg]),
-        invisible_anya: useMemo(() => ({ checked: image.invisible_anya, onChange: onCheck }), [image.invisible_anya]),
-        invisible_bg: useMemo(() => ({ checked: image.invisible_bg, onChange: onCheck }), [image.invisible_bg]),
+        mirrorCustom: useMemo(() => ({ checked: image.mirrorCustom, onChange: onCheck }), [image.mirrorCustom]),
+        mirrorAnya: useMemo(() => ({ checked: image.mirrorAnya, onChange: onCheck }), [image.mirrorAnya]),
+        mirrorBg: useMemo(() => ({ checked: image.mirrorBg, onChange: onCheck }), [image.mirrorBg]),
+        invisibleAnya: useMemo(() => ({ checked: image.invisibleAnya, onChange: onCheck }), [image.invisibleAnya]),
+        invisibleBg: useMemo(() => ({ checked: image.invisibleBg, onChange: onCheck }), [image.invisibleBg]),
     };
 
     const onFormChange = useCallback(({ form }) => {
@@ -133,16 +138,9 @@ const LikeIt = () => {
                             <Grid container direction="column">
                                 <Grid item style={{ paddingTop: 60, paddingBottom: 16 }}>
                                     <CheckboxField
-                                        label="安妮亞鏡像"
-                                        fieldKey="mirror_anya"
-                                        inputProps={inputProps.mirror_anya}
-                                    />
-                                </Grid>
-                                <Grid item>
-                                    <CheckboxField
-                                        label="背景鏡像"
-                                        fieldKey="mirror_bg"
-                                        inputProps={inputProps.mirror_bg}
+                                        label="自訂圖鏡像"
+                                        fieldKey="mirrorCustom"
+                                        inputProps={inputProps.mirrorCustom}
                                     />
                                 </Grid>
                             </Grid>
@@ -152,16 +150,35 @@ const LikeIt = () => {
                             <Grid container direction="column">
                                 <Grid item style={{ paddingTop: 60, paddingBottom: 16 }}>
                                     <CheckboxField
+                                        label="安妮亞鏡像"
+                                        fieldKey="mirrorAnya"
+                                        inputProps={inputProps.mirrorAnya}
+                                    />
+                                </Grid>
+                                <Grid item>
+                                    <CheckboxField
                                         label="安妮亞消失"
-                                        fieldKey="invisible_anya"
-                                        inputProps={inputProps.invisible_anya}
+                                        fieldKey="invisibleAnya"
+                                        inputProps={inputProps.invisibleAnya}
+                                    />
+                                </Grid>
+                            </Grid>
+                        </Grid>
+
+                        <Grid item xs={12} md="auto">
+                            <Grid container direction="column">
+                                <Grid item style={{ paddingTop: 60, paddingBottom: 16 }}>
+                                    <CheckboxField
+                                        label="背景鏡像"
+                                        fieldKey="mirrorBg"
+                                        inputProps={inputProps.mirrorBg}
                                     />
                                 </Grid>
                                 <Grid item>
                                     <CheckboxField
                                         label="背景消失"
-                                        fieldKey="invisible_bg"
-                                        inputProps={inputProps.invisible_bg}
+                                        fieldKey="invisibleBg"
+                                        inputProps={inputProps.invisibleBg}
                                     />
                                 </Grid>
                             </Grid>
@@ -173,24 +190,25 @@ const LikeIt = () => {
                         <Stuff
                             imgWidth={image.width * 0.345}
                             imgHeight={image.height * 0.473}
-                            left={image.width * (0.308 + (image.mirror_bg && !image.invisible_bg ? 0.041428 : 0))}
+                            left={image.width * (0.308 + (image.mirrorBg && !image.invisibleBg ? 0.041428 : 0))}
                             top={image.height * 0.141}
                             url={image.src}
                             imageFilledWay={image.imageFilledWay}
+                            mirror={image.mirrorCustom}
                         />
                         <Bg
                             width={image.width}
                             height={image.height}
                             src="/material_1/bg.png"
-                            mirror={image.mirror_bg}
-                            invisible={image.invisible_bg}
+                            mirror={image.mirrorBg}
+                            invisible={image.invisibleBg}
                         />
                         <Anya
                             width={image.width}
                             height={image.height}
                             src="/material_1/anya.png"
-                            mirror={image.mirror_anya}
-                            invisible={image.invisible_anya}
+                            mirror={image.mirrorAnya}
+                            invisible={image.invisibleAnya}
                         />
                         <SubHw bottom={image.height * 0.09183} imgFontSize={image.width * 0.03428}>
                             {image.sub}

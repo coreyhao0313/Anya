@@ -253,9 +253,9 @@ export const ImageControlorForm = ({
                 </Grid>
             </Grid>
             {children}
-            <Grid item xs={12} md="auto">
+            <Grid item xs={12} md>
                 <StylesProvider injectFirst>
-                    <Grid container spacing={3} style={{ paddingTop: 40 }}>
+                    <Grid container spacing={3} style={{ paddingTop: 40, textAlign: "right", paddingRight: 30 }}>
                         <Grid item xs={12}>
                             <StyledButton bright="這是一個布林TURE 為了MUI型別規範他馬的" onClick={onUpload} fullWidth>
                                 選圖
@@ -264,7 +264,7 @@ export const ImageControlorForm = ({
                         </Grid>
                         <Grid item xs={12}>
                             <StyledButton onClick={onClick} fullWidth>
-                                儲存
+                                下載
                             </StyledButton>
                         </Grid>
                     </Grid>

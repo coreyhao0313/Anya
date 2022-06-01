@@ -5,6 +5,7 @@ import html2canvas from "html2canvas";
 
 import { ImageControlorForm } from "../components/controlor/image.jsx";
 import { CheckboxField, useFormBase } from "../components/controlor/form.jsx";
+import { image2oliPaint } from "../lib/oldPainting.js";
 
 const CSS = {
     COMMON: `
@@ -21,9 +22,19 @@ const Stage = styled.div`
     overflow: hidden;
     background-color: #000;
 `;
-const Stuff = styled.div`
+
+const Bg = styled.img`
     ${CSS.COMMON}
     z-index: 1;
+
+    ${(props) => (props.mirror ? "transform: rotateY(180deg)" : "")};
+    ${(props) => (props.invisible ? "visibility: hidden" : "")};
+`;
+const Stuff = styled.div`
+    ${CSS.COMMON}
+    ${(props) => (!props.url ? "display: none" : "")};
+
+    z-index: 2;
 
     left: ${(props) => props.left + "px"};
     top: ${(props) => props.top + "px"};
@@ -35,26 +46,15 @@ const Stuff = styled.div`
     background-size: ${(props) => (props.imageFilledWay === "width" ? "100% auto" : "auto 100%")};
     background-position: center;
     background-repeat: no-repeat;
-`;
+    background-color: #000;
 
-const Bg = styled.img`
-    ${CSS.COMMON}
-    z-index: 2;
+    border-radius: 2px;
 
     ${(props) => (props.mirror ? "transform: rotateY(180deg)" : "")};
-    ${(props) => (props.invisible ? "visibility: hidden" : "")};
-`;
-const Anya = styled.img`
-    ${CSS.COMMON}
-    left: 0;
-    z-index: 3;
-
-    ${(props) => (props.mirror ? "transform: rotateY(180deg)" : "")};
-    ${(props) => (props.invisible ? "visibility: hidden" : "")};
 `;
 const SubHw = styled.div`
     ${CSS.COMMON}
-    z-index: 4;
+    z-index: 2;
 
     left: 50%;
     transform: translateX(-50%);
@@ -64,11 +64,11 @@ const SubHw = styled.div`
     font-family: sans-serif;
     font-weight: bold;
     color: white;
-    -webkit-text-stroke: 0.02em black;
+    -webkit-text-stroke: 0.03em black;
     text-shadow: 0.04em 0.04em 0.04em rgba(0, 0, 0, 0.4);
 `;
 
-const Naked = () => {
+const FoundItOut = () => {
     const $stage = useRef();
 
     const [image, setImage] = useState({
@@ -76,21 +76,25 @@ const Naked = () => {
         height: 392,
         src: "",
         imageFilledWay: "width",
-        sub: "安妮亞喜歡這個",
-        mirror_anya: false,
-        mirror_bg: false,
-        invisible_anya: false,
-        invisible_bg: false,
+        sub: "光溜溜, 光溜溜",
+        mirrorCustom: false,
+        mirrorBg: false,
+        oliPaint: true,
+        srcOliPaint: "",
+        mouthClosedAnya: false,
     });
 
     const { onCheck } = useFormBase({
         setForm: setImage,
     });
     const inputProps = {
-        mirror_anya: useMemo(() => ({ checked: image.mirror_anya, onChange: onCheck }), [image.mirror_anya]),
-        mirror_bg: useMemo(() => ({ checked: image.mirror_bg, onChange: onCheck }), [image.mirror_bg]),
-        invisible_anya: useMemo(() => ({ checked: image.invisible_anya, onChange: onCheck }), [image.invisible_anya]),
-        invisible_bg: useMemo(() => ({ checked: image.invisible_bg, onChange: onCheck }), [image.invisible_bg]),
+        mirrorCustom: useMemo(() => ({ checked: image.mirrorCustom, onChange: onCheck }), [image.mirrorCustom]),
+        mirrorBg: useMemo(() => ({ checked: image.mirrorBg, onChange: onCheck }), [image.mirrorBg]),
+        oliPaint: useMemo(() => ({ checked: image.oliPaint, onChange: onCheck }), [image.oliPaint]),
+        mouthClosedAnya: useMemo(
+            () => ({ checked: image.mouthClosedAnya, onChange: onCheck }),
+            [image.mouthClosedAnya]
+        ),
     };
 
     const onFormChange = useCallback(({ form }) => {
@@ -98,6 +102,9 @@ const Naked = () => {
     }, []);
     const onUploaded = useCallback((base64) => {
         setImage((imageState) => ({ ...imageState, src: base64 }));
+        image2oliPaint(base64).then((canvas) => {
+            setImage((imageState) => ({ ...imageState, srcOliPaint: canvas.toDataURL("image/jpeg") }));
+        });
     }, []);
 
     const onSave = useCallback(() => {
@@ -108,7 +115,7 @@ const Naked = () => {
         }).then((canvas) => {
             const $aLink = document.createElement("a");
             $aLink.setAttribute("href", canvas.toDataURL("image/jpeg"));
-            $aLink.setAttribute("download", "anya_like_it.jpeg");
+            $aLink.setAttribute("download", "anya_found_it_out.jpeg");
             $aLink.click();
         });
     }, [image]);
@@ -119,9 +126,9 @@ const Naked = () => {
                 <Grid item xs={12}>
                     <ImageControlorForm
                         maxWidth={1000}
-                        maxHeight={560}
+                        maxHeight={562}
                         defaultWidth={700}
-                        defaultHeight={392}
+                        defaultHeight={393}
                         onFormChange={onFormChange}
                         onSave={onSave}
                         onUploaded={onUploaded}
@@ -133,16 +140,16 @@ const Naked = () => {
                             <Grid container direction="column">
                                 <Grid item style={{ paddingTop: 60, paddingBottom: 16 }}>
                                     <CheckboxField
-                                        label="安妮亞鏡像"
-                                        fieldKey="mirror_anya"
-                                        inputProps={inputProps.mirror_anya}
+                                        label="圖鏡像"
+                                        fieldKey="mirrorCustom"
+                                        inputProps={inputProps.mirrorCustom}
                                     />
                                 </Grid>
                                 <Grid item>
                                     <CheckboxField
-                                        label="背景鏡像"
-                                        fieldKey="mirror_bg"
-                                        inputProps={inputProps.mirror_bg}
+                                        label="圖油畫感"
+                                        fieldKey="oliPaint"
+                                        inputProps={inputProps.oliPaint}
                                     />
                                 </Grid>
                             </Grid>
@@ -152,16 +159,16 @@ const Naked = () => {
                             <Grid container direction="column">
                                 <Grid item style={{ paddingTop: 60, paddingBottom: 16 }}>
                                     <CheckboxField
-                                        label="安妮亞消失"
-                                        fieldKey="invisible_anya"
-                                        inputProps={inputProps.invisible_anya}
+                                        label="背景鏡像"
+                                        fieldKey="mirrorBg"
+                                        inputProps={inputProps.mirrorBg}
                                     />
                                 </Grid>
                                 <Grid item>
                                     <CheckboxField
-                                        label="背景消失"
-                                        fieldKey="invisible_bg"
-                                        inputProps={inputProps.invisible_bg}
+                                        label="安妮亞閉口"
+                                        fieldKey="mouthClosedAnya"
+                                        inputProps={inputProps.mouthClosedAnya}
                                     />
                                 </Grid>
                             </Grid>
@@ -171,26 +178,19 @@ const Naked = () => {
                 <Grid item xs={12}>
                     <Stage ref={$stage} imgWidth={image.width} imgHeight={image.height}>
                         <Stuff
-                            imgWidth={image.width * 0.345}
-                            imgHeight={image.height * 0.473}
-                            left={image.width * (0.308 + (image.mirror_bg && !image.invisible_bg ? 0.041428 : 0))}
-                            top={image.height * 0.141}
-                            url={image.src}
+                            imgWidth={image.width * 0.499}
+                            imgHeight={image.height * 0.534}
+                            left={image.width * (0.161 + (image.mirrorBg ? 0.1785 : 0))}
+                            top={image.height * 0.0652}
+                            url={image.oliPaint ? image.srcOliPaint : image.src}
                             imageFilledWay={image.imageFilledWay}
+                            mirror={image.mirrorCustom}
                         />
                         <Bg
                             width={image.width}
                             height={image.height}
-                            src="/material_1/bg.png"
-                            mirror={image.mirror_bg}
-                            invisible={image.invisible_bg}
-                        />
-                        <Anya
-                            width={image.width}
-                            height={image.height}
-                            src="/material_1/anya.png"
-                            mirror={image.mirror_anya}
-                            invisible={image.invisible_anya}
+                            src={`/material_2/bg${image.mouthClosedAnya ? 2 : 1}.jpg`}
+                            mirror={image.mirrorBg}
                         />
                         <SubHw bottom={image.height * 0.09183} imgFontSize={image.width * 0.03428}>
                             {image.sub}
@@ -202,4 +202,4 @@ const Naked = () => {
     );
 };
 
-export default Naked;
+export default FoundItOut;

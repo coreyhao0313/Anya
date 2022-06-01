@@ -63,7 +63,7 @@ const NavItem = styled.div`
 
 const OFFSET_TOP = LINK_FONT_SIZE + PADDING_TOP + PADDING_BOTTOM;
 
-const LINKPATHS = ["/", "/anya_like_it", "/anya_"];
+const LINKPATHS = ["/", "/anya_like_it", "/anya_found_it_out"];
 const LINKS = [
     {
         to: LINKPATHS[0],
@@ -75,7 +75,7 @@ const LINKS = [
     },
     {
         to: LINKPATHS[2],
-        label: "是裸體",
+        label: "光溜溜",
     },
 ];
 

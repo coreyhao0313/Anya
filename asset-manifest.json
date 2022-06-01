@@ -1,13 +1,13 @@
 {
   "files": {
     "main.css": "/Anya/static/css/main.f1ca89fc.css",
-    "main.js": "/Anya/static/js/main.c9f84d36.js",
+    "main.js": "/Anya/static/js/main.8c1417fc.js",
     "index.html": "/Anya/index.html",
     "main.f1ca89fc.css.map": "/Anya/static/css/main.f1ca89fc.css.map",
-    "main.c9f84d36.js.map": "/Anya/static/js/main.c9f84d36.js.map"
+    "main.8c1417fc.js.map": "/Anya/static/js/main.8c1417fc.js.map"
   },
   "entrypoints": [
     "static/css/main.f1ca89fc.css",
-    "static/js/main.c9f84d36.js"
+    "static/js/main.8c1417fc.js"
   ]
 }

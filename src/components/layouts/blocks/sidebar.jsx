@@ -14,7 +14,9 @@ const StyledNavLink = styled(NavLink)`
     }
 `;
 const Nav = styled.div`
-    margin-top: 50px;
+    // margin-top: 50px;
+    margin-top: 50vh;
+    transform: translateY(-50%);
     padding: 20px 0;
     position: relative;
 

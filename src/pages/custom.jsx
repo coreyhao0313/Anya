@@ -60,7 +60,6 @@ const AnyaBase = styled.img`
     top: ${(props) => {
             const imgScale = props.imgScale / 100 || 1;
             const scaleTop = props.imgHeight * imgScale;
-            console.log(imgScale, scaleTop, props.imgHeight);
             return (props.imgHeight - scaleTop+4) / 2;
         }}px;
     transform: scale(${(props) => props.imgScale / 100 || 1}) ${(props) => (props.mirror ? "rotateY(180deg)" : "")};

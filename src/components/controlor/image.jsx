@@ -233,12 +233,16 @@ export const ImageControlorForm = ({
             </Grid>
             <Grid item xs={12} md="auto">
                 <Grid container direction="column">
-                    <Grid item style={{ paddingBottom: 16 }}>
+                    <Grid item>
                         <SelectField
+                            showBlock
+                            fixedBottomText
+                            emptyText="?"
                             label="填圖滿版依"
                             fieldKey="imageFilledWay"
                             inputProps={inputProps.imageFilledWay}
                             items={inputProps.imageFilledWayItems}
+                            required
                         />
                     </Grid>
                     <Grid item>

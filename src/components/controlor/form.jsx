@@ -342,12 +342,18 @@ export const _CheckboxField = ({ fieldKey, inputProps, label, className }) => {
 };
 export const CheckboxField = memo(_CheckboxField);
 
-export const _SelectField = ({ className, label, text, inputProps, fieldKey, items, showBlock }) => {
+export const _SelectField = ({ className, label, text, inputProps, fieldKey, items, showBlock, fixedBottomText }) => {
     setInputPropsFnForGetFieldkey(inputProps, fieldKey);
 
     return (
         <>
-            <Field label={label} text={text} showBlock={showBlock} className={className}>
+            <Field
+                label={label}
+                text={text}
+                showBlock={showBlock}
+                fixedBottomText={fixedBottomText}
+                className={className}
+            >
                 <Select className={styles.root__field__select} {...inputProps}>
                     {items.map((item, index) => (
                         <MenuItem value={item.value} key={`selectField_${fieldKey}_${index + 1}`}>

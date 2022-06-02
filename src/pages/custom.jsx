@@ -10,7 +10,7 @@ import { image2oliPaint } from "../lib/oldPainting.js";
 const CSS = {
     COMMON: `
         position: absolute;
-    `
+    `,
 };
 
 const Stage = styled.div`
@@ -21,14 +21,6 @@ const Stage = styled.div`
     height: ${(props) => props.imgHeight + "px" || "auto"};
     overflow: hidden;
     background-color: #000;
-`;
-
-const Bg = styled.img`
-    ${CSS.COMMON}
-    z-index: 1;
-
-    ${(props) => (props.mirror ? "transform: rotateY(180deg)" : "")};
-    ${(props) => (props.invisible ? "visibility: hidden" : "")};
 `;
 const Stuff = styled.div`
     ${CSS.COMMON}
@@ -58,10 +50,10 @@ const AnyaBase = styled.img`
     height: 100%;
 
     top: ${(props) => {
-            const imgScale = props.imgScale / 100 || 1;
-            const scaleTop = props.imgHeight * imgScale;
-            return (props.imgHeight - scaleTop+4) / 2;
-        }}px;
+        const imgScale = props.imgScale / 100 || 1;
+        const scaleTop = props.imgHeight * imgScale;
+        return (props.imgHeight - scaleTop + 4) / 2;
+    }}px;
     transform: scale(${(props) => props.imgScale / 100 || 1}) ${(props) => (props.mirror ? "rotateY(180deg)" : "")};
 `;
 const Anya = {
@@ -72,7 +64,12 @@ const Anya = {
     `,
     Type2: styled(AnyaBase)`
         ${CSS.COMMON}
-        top: 23.5%;
+        top: ${(props) => {
+            const imgScale = props.imgScale / 100 || 1;
+            const scaleTop = props.imgHeight * imgScale;
+            const imgOffset = props.imgHeight * 0.235;
+            return (props.imgHeight - scaleTop + 4) / 2 + imgOffset;
+        }}px;
         left: 0;
     `,
     Type3: styled(AnyaBase)`
@@ -202,8 +199,10 @@ const AnyaCustom = () => {
 
                         <Grid item xs={12} md="auto">
                             <Grid container direction="column">
-                                <Grid item style={{ paddingTop: 0, paddingBottom: 16 }}>
+                                <Grid item>
                                     <SelectField
+                                        showBlock
+                                        fixedBottomText
                                         label="安妮亞類型"
                                         fieldKey="typeAnya"
                                         inputProps={inputProps.typeAnya}
@@ -214,7 +213,7 @@ const AnyaCustom = () => {
                                     <InputField
                                         showBlock
                                         fixedBottomText
-                                        label="安妮亞縮放"
+                                        label="安妮亞縮放 1 - 100"
                                         pattern={/^\d+(\.\d{1,})?$/}
                                         errRegexText="只能是數字或小數"
                                         onRegex={onRegex}
@@ -229,7 +228,7 @@ const AnyaCustom = () => {
 
                         <Grid item xs={12} md="auto">
                             <Grid container direction="column">
-                                <Grid item style={{ paddingTop: 60, paddingBottom: 16 }}>
+                                <Grid item style={{ paddingTop: 35 }}>
                                     <CheckboxField
                                         label="圖鏡像"
                                         fieldKey="mirrorStuff"
@@ -242,14 +241,6 @@ const AnyaCustom = () => {
                                         fieldKey="oliPaint"
                                         inputProps={inputProps.oliPaint}
                                     />
-                                </Grid>
-                            </Grid>
-                        </Grid>
-
-                        <Grid item xs={12} md="auto">
-                            <Grid container direction="column">
-                                <Grid item style={{ paddingTop: 0, paddingBottom: 16 }}>
-                                    ...
                                 </Grid>
                                 <Grid item>
                                     <CheckboxField

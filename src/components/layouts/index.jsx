@@ -20,7 +20,7 @@ export const Layout = {
     Default: ({ sidebar, children }) => {
         return (
             <StyledContainer component="main" maxWidth={false}>
-                <Grid container direction="row">
+                <Grid container direction="row" wrap="nowrap">
                     <StyledGridSide item xs="auto">
                         {sidebar}
                     </StyledGridSide>

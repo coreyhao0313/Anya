@@ -41,7 +41,7 @@ const Block = styled.div`
     line-height: 1.44em;
 
     border-radius: 8px;
-    padding: 1.5em;
+    padding: 2vw;
 
     > p {
         margin: 0.5em;

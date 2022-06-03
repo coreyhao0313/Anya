@@ -1,31 +1,34 @@
 import styled from "styled-components";
+import { Container, Grid } from "@material-ui/core";
 
-const Wrapper = styled.div`
-    display: flex;
-    // background-image: url(/wall11.jpg);
-    // background-position: center;
-    // background-size: 100% auto;
-    background-color: #000;
-    min-height: 100vh;
+const StyledContainer = styled(Container)`
+    padding-left: 0 !important;
+    padding-right: 0 !important;
 `;
-const Side = styled.div`
-    flex-basis: 15%;
-    position: sticky;
-    max-height: 100vh;
+const StyledGridBase = styled(Grid)`
     overflow: auto;
+    max-height: 100vh;
 `;
-const Content = styled.div`
-    flex-basis: 85%;
-    padding: 30px 0;
+const StyledGridSide = styled(StyledGridBase)`
+    position: sticky;
+`;
+const StyledGridContent = styled(StyledGridBase)`
+    padding: 10vh 0;
 `;
 
 export const Layout = {
     Default: ({ sidebar, children }) => {
         return (
-            <Wrapper>
-                <Side>{sidebar}</Side>
-                <Content>{children}</Content>
-            </Wrapper>
+            <StyledContainer component="main" maxWidth={false}>
+                <Grid container direction="row">
+                    <StyledGridSide item xs="auto">
+                        {sidebar}
+                    </StyledGridSide>
+                    <StyledGridContent item xs={8} md>
+                        {children}
+                    </StyledGridContent>
+                </Grid>
+            </StyledContainer>
         );
     },
 };

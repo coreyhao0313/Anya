@@ -11,7 +11,9 @@ const CSS = {
         position: absolute;
     `,
 };
-
+const StyledGridWrapperForStage = styled(Grid)`
+    overflow-x: auto;
+`;
 const Stage = styled.div`
     position: relative;
 
@@ -136,9 +138,9 @@ const LikeIt = () => {
                     >
                         {/* 額外欄位 */}
 
-                        <Grid item xs={12} md="auto">
+                        <Grid item xs="auto">
                             <Grid container direction="column">
-                                <Grid item style={{ paddingTop: 60, paddingBottom: 16 }}>
+                                <Grid item>
                                     <CheckboxField
                                         label="自訂圖鏡像"
                                         fieldKey="mirrorStuff"
@@ -155,9 +157,9 @@ const LikeIt = () => {
                             </Grid>
                         </Grid>
 
-                        <Grid item xs={12} md="auto">
+                        <Grid item xs="auto">
                             <Grid container direction="column">
-                                <Grid item style={{ paddingTop: 60, paddingBottom: 16 }}>
+                                <Grid item>
                                     <CheckboxField
                                         label="安妮亞鏡像"
                                         fieldKey="mirrorAnya"
@@ -174,9 +176,9 @@ const LikeIt = () => {
                             </Grid>
                         </Grid>
 
-                        <Grid item xs={12} md="auto">
+                        <Grid item xs="auto">
                             <Grid container direction="column">
-                                <Grid item style={{ paddingTop: 60, paddingBottom: 16 }}>
+                                <Grid item>
                                     <CheckboxField
                                         label="背景鏡像"
                                         fieldKey="mirrorBg"
@@ -194,7 +196,7 @@ const LikeIt = () => {
                         </Grid>
                     </ImageControlorForm>
                 </Grid>
-                <Grid item xs={12}>
+                <StyledGridWrapperForStage item xs={12}>
                     <Stage ref={$stage} imgWidth={image.width} imgHeight={image.height}>
                         <Stuff
                             {...(image.fullStuff
@@ -228,7 +230,7 @@ const LikeIt = () => {
                             {image.sub}
                         </SubHw>
                     </Stage>
-                </Grid>
+                </StyledGridWrapperForStage>
             </Grid>
         </Container>
     );

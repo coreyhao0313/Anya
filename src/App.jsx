@@ -9,6 +9,7 @@ import { LinkListWithRouter } from "./components/layouts/blocks/sidebar.jsx";
 import { Layout } from "./components/layouts";
 
 import "./reset.css";
+import "./globals.css";
 
 function App() {
     return (

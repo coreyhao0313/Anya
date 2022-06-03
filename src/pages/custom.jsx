@@ -13,6 +13,9 @@ const CSS = {
     `,
 };
 
+const StyledGridWrapperForStage = styled(Grid)`
+    overflow-x: auto;
+`;
 const Stage = styled.div`
     position: relative;
 
@@ -228,7 +231,7 @@ const AnyaCustom = () => {
 
                         <Grid item xs={12} md="auto">
                             <Grid container direction="column">
-                                <Grid item style={{ paddingTop: 35 }}>
+                                <Grid item>
                                     <CheckboxField
                                         label="圖鏡像"
                                         fieldKey="mirrorStuff"
@@ -253,7 +256,7 @@ const AnyaCustom = () => {
                         </Grid>
                     </ImageControlorForm>
                 </Grid>
-                <Grid item xs={12}>
+                <StyledGridWrapperForStage item xs={12}>
                     <Stage ref={$stage} imgWidth={image.width} imgHeight={image.height}>
                         <Stuff
                             url={image.oliPaint ? image.srcOliPaint : image.src}
@@ -270,7 +273,7 @@ const AnyaCustom = () => {
                             {image.sub}
                         </SubHw>
                     </Stage>
-                </Grid>
+                </StyledGridWrapperForStage>
             </Grid>
         </Container>
     );

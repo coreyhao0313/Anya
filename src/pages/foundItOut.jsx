@@ -13,6 +13,9 @@ const CSS = {
     `,
 };
 
+const StyledGridWrapperForStage = styled(Grid)`
+    overflow-x: auto;
+`;
 const Stage = styled.div`
     position: relative;
 
@@ -138,7 +141,7 @@ const FoundItOut = () => {
 
                         <Grid item xs={12} md="auto">
                             <Grid container direction="column">
-                                <Grid item style={{ paddingTop: 60, paddingBottom: 16 }}>
+                                <Grid item>
                                     <CheckboxField
                                         label="圖鏡像"
                                         fieldKey="mirrorStuff"
@@ -157,7 +160,7 @@ const FoundItOut = () => {
 
                         <Grid item xs={12} md="auto">
                             <Grid container direction="column">
-                                <Grid item style={{ paddingTop: 60, paddingBottom: 16 }}>
+                                <Grid item>
                                     <CheckboxField
                                         label="背景鏡像"
                                         fieldKey="mirrorBg"
@@ -175,7 +178,7 @@ const FoundItOut = () => {
                         </Grid>
                     </ImageControlorForm>
                 </Grid>
-                <Grid item xs={12}>
+                <StyledGridWrapperForStage item xs={12}>
                     <Stage ref={$stage} imgWidth={image.width} imgHeight={image.height}>
                         <Stuff
                             imgWidth={image.width * 0.499}
@@ -196,7 +199,7 @@ const FoundItOut = () => {
                             {image.sub}
                         </SubHw>
                     </Stage>
-                </Grid>
+                </StyledGridWrapperForStage>
             </Grid>
         </Container>
     );

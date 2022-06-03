@@ -5,7 +5,7 @@ const StyledGridBg = styled(Grid)`
     position: relative;
 
     height: 100vh;
-    margin-bottom: -30px !important;
+    margin: -10vh 0;
 
     &::after {
         position: absolute;
@@ -28,6 +28,7 @@ const StyledGridItem = styled(Grid)`
     display: flex;
     flex-direction: column;
     justify-content: center;
+    word-break: break-all
 `;
 const Block = styled.div`
     font-size: 1.5em;
@@ -57,24 +58,26 @@ const SubHw = styled.div`
 `;
 const Home = () => {
     return (
-        <Container component="main">
-            <StyledGridBg container direction="row" spacing={2}>
-                <Grid item md={2} implementation="css" component={Hidden} />
-                <StyledGridItem item xs={12} md={8}>
-                    <Block>
-                        <p>
-                            本站為前端技術試做及娛樂用途
-                            <br />
-                            無包含任何營利相關內容
-                        </p>
-                        <p>更多素材多取自 https://forum.gamer.com.tw/C.php?bsn=60076&snA=7039277</p>
-                    </Block>
-                </StyledGridItem>
-                <StyledGridItem item xs={12}>
-                    <SubHw>安妮亞想換場景</SubHw>
-                </StyledGridItem>
-            </StyledGridBg>
-        </Container>
+        <StyledGridBg container direction="row">
+            <Grid item md={2} implementation="css" component={Hidden} />
+            <StyledGridItem item xs={12} md={8}>
+                <Block>
+                    <p>
+                        本站為前端技術試做及娛樂用途
+                        <br />
+                        無包含任何營利相關內容
+                    </p>
+                    <p>
+                        更多素材多取自
+                        <br />
+                        https://forum.gamer.com.tw/C.php?bsn=60076&snA=7039277
+                    </p>
+                </Block>
+            </StyledGridItem>
+            <StyledGridItem item xs={12}>
+                <SubHw>安妮亞想換場景</SubHw>
+            </StyledGridItem>
+        </StyledGridBg>
     );
 };
 

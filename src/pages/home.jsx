@@ -94,14 +94,14 @@ const Home = () => {
                     <p>未來可能會增加場景 也歡迎提供更多去背或其他素材</p>
                     <br />
                     <p ref={$stageTest} style={{textAlign: "center"}}>
-                        ＊
+                        ＊強烈建議使用<u>電腦版</u><br />
                         {testResult === null ? (
                             ""
                         ) : (
                             <>
-                                你的裝置可能
+                                你現在的裝置
                                 <span style={{ color: testResult ? "#0F0" : "#F00" }}>
-                                    {testResult ? "" : "不"}支援
+                                    {testResult ? "可能" : "不"}支援
                                 </span>
                                 這些功能
                             </>

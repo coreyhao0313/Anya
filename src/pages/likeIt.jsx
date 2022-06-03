@@ -139,7 +139,7 @@ const LikeIt = () => {
                         {/* 額外欄位 */}
 
                         <Grid item xs="auto">
-                            <Grid container direction="column">
+                            <Grid container direction="column" style={{ height: "100%", justifyContent: "center" }}>
                                 <Grid item>
                                     <CheckboxField
                                         label="自訂圖鏡像"
@@ -158,7 +158,7 @@ const LikeIt = () => {
                         </Grid>
 
                         <Grid item xs="auto">
-                            <Grid container direction="column">
+                            <Grid container direction="column" style={{ height: "100%", justifyContent: "center" }}>
                                 <Grid item>
                                     <CheckboxField
                                         label="安妮亞鏡像"
@@ -177,7 +177,7 @@ const LikeIt = () => {
                         </Grid>
 
                         <Grid item xs="auto">
-                            <Grid container direction="column">
+                            <Grid container direction="column" style={{ height: "100%", justifyContent: "center" }}>
                                 <Grid item>
                                     <CheckboxField
                                         label="背景鏡像"

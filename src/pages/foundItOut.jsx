@@ -140,7 +140,7 @@ const FoundItOut = () => {
                         {/* 額外欄位 */}
 
                         <Grid item xs={12} md="auto">
-                            <Grid container direction="column">
+                            <Grid container direction="column" style={{ height: "100%", justifyContent: "center" }}>
                                 <Grid item>
                                     <CheckboxField
                                         label="圖鏡像"
@@ -159,7 +159,7 @@ const FoundItOut = () => {
                         </Grid>
 
                         <Grid item xs={12} md="auto">
-                            <Grid container direction="column">
+                            <Grid container direction="column" style={{ height: "100%", justifyContent: "center" }}>
                                 <Grid item>
                                     <CheckboxField
                                         label="背景鏡像"

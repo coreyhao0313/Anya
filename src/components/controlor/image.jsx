@@ -259,7 +259,11 @@ export const ImageControlorForm = ({
             {children}
             <Grid item xs={12} md>
                 <StylesProvider injectFirst>
-                    <Grid container spacing={3} style={{ textAlign: "right" }}>
+                    <Grid
+                        container
+                        spacing={3}
+                        style={{ height: "100%", justifyContent: "center", textAlign: "right" }}
+                    >
                         <Grid item xs={12}>
                             <StyledButton bright="這是一個布林TURE 為了MUI型別規範他馬的" onClick={onUpload} fullWidth>
                                 選圖

@@ -1,5 +1,7 @@
+import { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
-import { Container, Grid, Hidden } from "@material-ui/core";
+import { Grid, Hidden } from "@material-ui/core";
+import html2canvas from "html2canvas";
 
 const StyledGridBg = styled(Grid)`
     position: relative;
@@ -28,7 +30,7 @@ const StyledGridItem = styled(Grid)`
     display: flex;
     flex-direction: column;
     justify-content: center;
-    word-break: break-all
+    word-break: break-all;
 `;
 const Block = styled.div`
     font-size: 1.5em;
@@ -57,6 +59,23 @@ const SubHw = styled.div`
     text-align: center;
 `;
 const Home = () => {
+    const $stageTest = useRef();
+    const [testResult, setTestResult] = useState(null);
+
+    useEffect(() => {
+        html2canvas($stageTest.current, {
+            width: 100,
+            height: 100,
+            scale: 1,
+        }).then((canvas) => {
+            try {
+                setTestResult(!!canvas.toDataURL("image/jpeg").length);
+            } catch (err) {
+                setTestResult(false);
+            }
+        });
+    }, []);
+
     return (
         <StyledGridBg container direction="row">
             <Grid item md={2} implementation="css" component={Hidden} />
@@ -71,6 +90,22 @@ const Home = () => {
                         更多素材多取自
                         <br />
                         https://forum.gamer.com.tw/C.php?bsn=60076&snA=7039277
+                    </p>
+                    <p>未來可能會增加場景 也歡迎提供更多去背或其他素材</p>
+                    <br />
+                    <p ref={$stageTest} style={{textAlign: "center"}}>
+                        ＊
+                        {testResult === null ? (
+                            ""
+                        ) : (
+                            <>
+                                你的裝置可能
+                                <span style={{ color: testResult ? "#0F0" : "#F00" }}>
+                                    {testResult ? "" : "不"}支援
+                                </span>
+                                這些功能
+                            </>
+                        )}
                     </p>
                 </Block>
             </StyledGridItem>

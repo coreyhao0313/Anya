@@ -14,7 +14,6 @@ const StyledNavLink = styled(NavLink)`
     }
 `;
 const Nav = styled.div`
-    // margin-top: 50px;
     margin-top: 50vh;
     transform: translateY(-50%);
     padding: 20px 0;
@@ -55,9 +54,7 @@ const Nav = styled.div`
 const PADDING_TOP = 1.5;
 const PADDING_BOTTOM = 1.5;
 const NavItem = styled.div`
-    padding-top: ${PADDING_TOP}em;
-    padding-bottom: ${PADDING_BOTTOM}em;
-    padding-left: 2.3em;
+    padding:${PADDING_TOP}em 2.3em ${PADDING_BOTTOM}em;
 
     position: relative;
     z-index: 3;
